@@ -1,0 +1,7 @@
+example/certificates/
+example/logs/
+example/logs/api.log
+example/logs/ipnLog.log
+example/logs/realtimeLog.log
+example/vendor/
+example/composer.lock
