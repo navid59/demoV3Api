@@ -10,9 +10,6 @@ switch($_POST['logType']){
     case 1:
         $logType = 'realtimeLog';
     break;
-    case 2:
-        $logType = 'ipnLog';
-    break;
     default:
         # nothing to clean
 }

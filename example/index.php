@@ -25,22 +25,21 @@ log::setRealTimeLog(array('CheckoutPage' => getenv('LOG_TXT_CHECKOUT') ? getenv(
             <?php include_once("theme/inc/topNav.inc"); ?>
             <?php include_once("theme/inc/nav.inc"); ?>
             <div class="row">
-                <div class="tab-content" id="myTabContent">
+                <div class="tab-content w-100" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <?php include_once("theme/checkout.php"); ?>
                     </div>
-                    <div class="tab-pane fade" id="getStatus" role="tabpanel" aria-labelledby="getStatus-tab">Check a payment status</div>
-                    <div class="tab-pane fade" id="expirePayment" role="tabpanel" aria-labelledby="expirePayment-tab">Expire a Payment</div>
+
                     <div class="tab-pane fade" id="realTimeLog" role="tabpanel" aria-labelledby="realTimeLog-tab">
                         <div class="panel panel-primary" id="result_panel">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Real time Log</h3>
                             </div>
                             <div class="list-group">
-                                <span id="containerDiv">Real Time Log</span>
+                                <span id="containerDiv" class="w-100 p-3">Real Time Log</span>
                             </div>
                             <hr>
-                                <button class="btn btn-secondary btn-lg btn-block" onclick="cleanLogFile(1)">Remove Log</button>
+                                <button class="btn btn-secondary btn-lg" onclick="cleanLogFile(1)">Remove Log</button>
                                 <div id="logMessage-success" class="alert alert-success" style="display: none;">
                                     <p id="logSuccessMessage"></p>
                                 </div>
@@ -49,37 +48,7 @@ log::setRealTimeLog(array('CheckoutPage' => getenv('LOG_TXT_CHECKOUT') ? getenv(
                                 </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="confirmURL" role="tabpanel" aria-labelledby="confirmURL-tab">
-                        <div class="panel panel-primary" id="result_panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">IPN Log</h3>
-                            </div>
-                            <div class="list-group">
-                                <span id="containerDivIpnLog">IPN real time log</span>
-                            </div>
-                        </div>
-                        <hr>
-                        <button class="btn btn-secondary btn-lg btn-block" onclick="cleanLogFile(2)">Remove Log</button>
-                        <div id="ipnLogMessage-success" class="alert alert-success" style="display: none;">
-                            <p id="ipnLogSuccessMessage"></p>
-                        </div>
-                        <div id="ipnLogMessage-warning" class="alert alert-warning" style="display: none">
-                            <p id="ipnLogWarningMessage"></p>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="returnURL" role="tabpanel" aria-labelledby="returnURL-tab">
-                        <div class="panel panel-primary" id="result_panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Success Page Log</h3>
-                            </div>
-                            <div class="list-group">
-                                <span id="containerDivReturnLog">Real Time Log</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="document" role="tabpanel" aria-labelledby="document-tab">
-                        <?php include_once("theme/apiDocument.php"); ?>
-                    </div>
+
                 </div>
             </div>
         </div>

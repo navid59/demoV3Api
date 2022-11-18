@@ -7,9 +7,11 @@ PHP 5.7.x - 8.0.x
 
 ### API URL
 * #### Sandbox:
-       https://secure.sandbox.netopia-payments.com/
+       https://secure.sandbox.netopia-payments.com/                     // ????
+       https://secure.sandbox.netopia-payments.com/payment/card/start   // ????
 * #### Live:
-       https://secure.netopia-payments.com/
+       https://secure.netopia-payments.com/                             // ????
+       https://secure.mobilpay.ro/pay/payment/card/start                // ????
 
 
 ### API Specification

@@ -49,15 +49,14 @@ class log {
         if(is_null($arrLog))
             return false;
 
-        $logPoint = '<li class="list-group-item">';
+        $logPoint = '<ul class="list-group-item">';
         $logPoint .= date(" - H:i:s - ")." ";
         ob_start();                     // start buffer capture
         
         foreach($arrLog as $key => $val) {
             $logPoint .= " <b>".$key ." : </b> ". $val;
         }
-        $logPoint .= "</li>
-        ";
+        $logPoint .= "</ul>";
         echo $logPoint;
         $contents = ob_get_contents();  // put the buffer into a variable
         ob_end_clean();
