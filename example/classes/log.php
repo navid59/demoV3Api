@@ -63,18 +63,6 @@ class log {
            file_put_contents('logs/realtimeLog.log', $contents , FILE_APPEND | LOCK_EX);
     }
 
-    static function setIpnLog($log) {
-        if(is_null($log))
-            return false;
-            
-        $logPoint = rand(1,1000).date(" - H:i:s - ")." | ";
-        ob_start();                     // start buffer capture
-        echo $logPoint;
-        var_dump( $log );               // dump the values
-        $contents = ob_get_contents();  // put the buffer into a variable
-        ob_end_clean();
-           file_put_contents('logs/ipnLog.log', $contents , FILE_APPEND | LOCK_EX);
-    }
 
     static function logHeader() {
         $targetFile = 'logs/header.log';

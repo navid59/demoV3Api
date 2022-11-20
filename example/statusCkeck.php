@@ -17,7 +17,10 @@ include_once __DIR__ . '/vendor/autoload.php';
  * The  env var using in UI ,..
  */
 
-$dotenv = new Dotenv\Dotenv(__DIR__);
+// $dotenv = new Dotenv\Dotenv(__DIR__);
+// $dotenv->load();
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 /**
@@ -25,7 +28,7 @@ $dotenv->load();
  * redirect to 404
  * */ 
 if(count($_SESSION) == 0 || !isset($_SESSION)) {
-    $url = getenv('PROJECT_SERVER_ADDRESS').getenv('PROJECT_BASE_ROOT').getenv('PROJECT_404_PAGE');
+    $url = $_ENV['PROJECT_SERVER_ADDRESS'].$_ENV['PROJECT_BASE_ROOT'].$_ENV['PROJECT_404_PAGE'];
     header("Location: $url");
     exit;
 }

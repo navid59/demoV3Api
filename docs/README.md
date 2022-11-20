@@ -1,4 +1,3 @@
-<!-- ![](http://35.204.43.65/demo/assets/img/Demo01.png) -->
 ## Introduction
 The NETOPIA PHP library provides easy access to the NETOPIA Payments API from
 applications written in the PHP language.

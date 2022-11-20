@@ -124,7 +124,7 @@
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">to do more test click the following button and try new payment in Demo mode.</p>
-                    <a href="<?=getenv('PROJECT_SERVER_ADDRESS').getenv('PROJECT_BASE_ROOT')?>" class="btn btn-primary stretched-link">continue shopping</a>
+                    <a href="<?=$_ENV['PROJECT_SERVER_ADDRESS'].$_ENV['PROJECT_BASE_ROOT']?>" class="btn btn-primary stretched-link">continue shopping</a>
                 </div>
             </div>
         </div>

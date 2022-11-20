@@ -12,10 +12,16 @@ include_once('classes/log.php');
  * Load .env 
  * To read Logo , ... from .env
  */
-$dotenv = new Dotenv\Dotenv(__DIR__);
+// $dotenv = new Dotenv\Dotenv(__DIR__);
+// $dotenv->load();
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-log::setRealTimeLog(array('CheckoutPage' => getenv('LOG_TXT_CHECKOUT') ? getenv('LOG_TXT_CHECKOUT') : 'Checkout is hitting' ));
+// echo $_ENV['PROJECT_AUTHOR'];
+// die();
+
+log::setRealTimeLog(array('CheckoutPage' => $_ENV['LOG_TXT_CHECKOUT'] ? $_ENV['LOG_TXT_CHECKOUT'] : 'Checkout is hitting' ));
 ?>
 <!doctype html>
 <html lang="en">
