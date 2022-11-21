@@ -39,8 +39,8 @@ if(count($_SESSION) == 0 || !isset($_SESSION)) {
  * the "apiKey","isLive", "posSignature" can be set statically or read from DB, File, ...
  */
 $statusPayment = new Status();
-$statusPayment->apiKey              = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0'; // Valid Api code Oct-2021
-$statusPayment->posSignature        = 'LXTP-3WDM-WVXL-GC8B-Y5DA';                                 // Your signiture ID hear
+$statusPayment->apiKey              = 'YOURAPIKEYFROMADMINNETOPIA-PAYMENTS.COM';   // Your Api key here
+$statusPayment->posSignature        = 'AAAA-BBBB-CCCC-DDDD-EEEE';                  // Your signiture ID here
 $statusPayment->ntpID               = $_SESSION['ntpID'];
 $statusPayment->orderID             = $_SESSION['orderID'];
 $statusPayment->isLive              = false;
