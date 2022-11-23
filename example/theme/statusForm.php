@@ -107,6 +107,19 @@
                         </div>
                         ';
                     break;
+                    case 15:
+                        echo '
+                        <div class="alert alert-success" role="alert">
+                            Payment need to authorize by bank.
+                        </div>
+                        ';
+                        echo '
+                        <div class="card-body">
+                            <h5 class="card-title">Total amount : </h5>
+                            <p class="card-text">'.$paymentStatustArr->data->payment->amount.' '.$paymentStatustArr->data->payment->currency.'</p>
+                        </div>
+                        ';
+                    break;
                     default:
                     echo '
                         <div class="alert alert-warning" role="alert">

@@ -40,20 +40,24 @@ class Status extends Start{
 
         // Send request to get payment status
         public function getStatus($jsonStr) {  
-            $url = $this->isLive ? 'https://secure.netopia-payments.com/operation/status' : 'https://secure.sandbox.netopia-payments.com/operation/status';
+            $url = $this->isLive ? 'https://secure.mobilpay.ro/pay/operation/status' : 'https://secure.sandbox.netopia-payments.com/operation/status';
             $ch = curl_init($url);
         
+            $headers  = [
+                'Authorization: '.$this->apiKey,
+                'Content-Type: application/json'
+            ];
+
             $payload = $jsonStr; // json DATA
         
             // Attach encoded JSON string to the POST fields
             curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         
-            // Set the content type to application/json
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type : application/json'));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array("Authorization : $this->apiKey"));
-        
             // Return response instead of outputting
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            // Set the content type to application/json
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         
             // Execute the POST request
             $result = curl_exec($ch);
