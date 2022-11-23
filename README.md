@@ -11,6 +11,12 @@ PHP 5.7.x - 8.0.x
 ## API Specification
 * https://secure.sandbox.netopia-payments.com/spec
 
+## Installation
+To install the library via <a href="https://getcomposer.org/" target="_blank">composer</a>, run the following command:
+* composer require netopia/paymentsv2
+
+Or add **"netopia/paymentsv2": "^1.0.0"** to the "require" section in composer.json
+
 ## API Actions
 ### Start
 Use this endpoint to start a payment. Based on the response to this call the process either stops or you need to continue with verify_auth

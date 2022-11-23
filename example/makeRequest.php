@@ -18,8 +18,8 @@ $request = new Request();
 $request->posSignature  = 'AAAA-BBBB-CCCC-DDDD-EEEE';                                       // Your signiture ID hear
 $request->apiKey        = 'YOUR-API-KEY-XXXX-YOUR-API-KEY--YOUR-API-KEY--YOUR-API-KEY--';   // Your Api key here
 $request->isLive        = false;
-$request->notifyUrl     = 'http://your-domain/example/ipn.php';                  // Your IPN URL
-$request->redirectUrl   = 'http://your-domain/example/backUrl.php';              // Your backURL
+$request->notifyUrl     = $_ENV['PROJECT_SERVER_ADDRESS'].$_ENV['PROJECT_BASE_ROOT'].'/ipn.php';                  // Your IPN URL
+$request->redirectUrl   = $_ENV['PROJECT_SERVER_ADDRESS'].$_ENV['PROJECT_BASE_ROOT'].'/backUrl.php';              // Your backURL
 
 
 /**
