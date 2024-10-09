@@ -8,6 +8,7 @@ use Firebase\JWT\ExpiredException;
 
 class IPN extends Request{
    
+    public $activeKey;
     public $posSignatureSet;
     public $hashMethod;
     public $alg;

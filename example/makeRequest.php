@@ -94,6 +94,7 @@ echo $startResult;
  */
 $resultObj = json_decode($startResult);
 // print_r($resultObj);
+log::setBackendLog($resultObj);
 
 if($resultObj->status){
     switch ($resultObj->data->error->code) {
@@ -105,7 +106,13 @@ if($resultObj->status){
                 $_SESSION['authorizeUrl'] = $resultObj->data->customerAction->url;
             }
 
-            $_SESSION['authenticationToken'] = $resultObj->data->customerAction->authenticationToken;
+            /**
+             * Thg authenticationToken is not exist in response always
+             */
+            if(isset($resultObj->data->customerAction->authenticationToken) ) {
+                $_SESSION['authenticationToken'] = $resultObj->data->customerAction->authenticationToken;
+            }
+            
             $_SESSION['ntpID'] = $resultObj->data->payment->ntpID;
         break;
         case 0:
