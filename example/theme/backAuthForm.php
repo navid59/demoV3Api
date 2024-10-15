@@ -1,3 +1,6 @@
+<?php
+var_dump($paymentResultArr);
+?>
 <div class="col" style="padding-top:15px;">
     <div class="alert alert-primary" role="alert">
         <?=$paymentResultArr->message?>

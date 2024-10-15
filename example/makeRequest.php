@@ -9,11 +9,12 @@ include_once('classes/log.php');
 include_once('../lib/request.php');
 
 $request = new Request();
-$request->posSignature  = 'AAAA-BBBB-CCCC-DDDD-EEEE';                  // Your signiture ID hear
-$request->apiKey        = 'YOURAPIKEYFROMADMINNETOPIA-PAYMENTS.COM';   // Your Api key here
+$request->posSignature  = 'LXTP-3WDM-WVXL-GC8B-Y5DA';                  // Your signiture ID hear
+// $request->apiKey        = 'vM-oq2feqWcdtdxP0a5Z16wJbpZefotsCM2frQzRk9Vv0rb9ZCpm1HNjmA==';   // Your Api key Live
+$request->apiKey        = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';   // Your Api key Sandbox
 $request->isLive        = false;
-$request->notifyUrl     = 'http://your-domain/your-app/ipn.php';               // Your IPN URL
-$request->redirectUrl   = 'http://your-domain/your-app/backUrl.php';           // Your backURL
+$request->notifyUrl     = 'http://34.78.187.3/example/ipn.php';               // Your IPN URL
+$request->redirectUrl   = 'http://34.78.187.3/example/backUrl.php';           // Your backURL
 
 
 /**
@@ -42,7 +43,7 @@ $request->redirectUrl   = 'http://your-domain/your-app/backUrl.php';           /
  /** - Order section  */
 $orderData = new \StdClass();
  
-$orderData->description             = isset($_POST['description']) ?  $_POST['description'] :  "DEMO API FROM WEB - V2";
+$orderData->description             = isset($_POST['description']) ?  $_POST['description'] :  "DEMO API FROM WEB - V3";
 $orderData->orderID                 = $_POST['orderID'];
 $orderData->amount                  = $_POST['amount'];
 $orderData->currency                = $_POST['currency'];

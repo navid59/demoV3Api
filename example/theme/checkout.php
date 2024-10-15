@@ -288,10 +288,10 @@ $prices = array_column($products, 'pPrice');
           <input id="card" name="paymentMethod" type="radio" class="custom-control-input" value="card" checked required>
           <label class="custom-control-label" for="card">Credit / Debit card</label>
         </div>
-        <div class="custom-control custom-radio">
+        <!-- <div class="custom-control custom-radio">
           <input id="btc" name="paymentMethod" type="radio" class="custom-control-input" required disabled>
           <label class="custom-control-label" for="btc">BTC</label>
-        </div>
+        </div> -->
       </div>
 
       <h4 class="mb-3">Card Information</h4>
@@ -336,7 +336,21 @@ $prices = array_column($products, 'pPrice');
         </div>
       </div>
       <hr class="mb-4">
-      <input class="btn btn-primary btn-lg btn-block" id="doPayment" type="submit" value="Continue to checkout">
+      <div class="row">
+        <div class="col-6 col-md-4">
+          &nbsp;
+        </div>
+        <div class="col-6 col-md-4">
+          <input class="btn btn-primary btn-lg btn-block" id="doPayment" type="submit" value="Continue to checkout">
+        </div>
+        <div class="col-6 col-md-4">
+          <div class="spinner-border text-info" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <hr class="mb-4">
+      <!-- <input class="btn btn-primary btn-lg btn-block" id="doPayment" type="submit" value="Continue to checkout"> -->
     </form>
     <hr class="mb-4">
     <div id="message" style="display: none">

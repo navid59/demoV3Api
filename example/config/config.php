@@ -46,7 +46,7 @@ $billingShippingInfo = array(
         'lastName'   => 'Client nume '.str_shuffle('rand123'),
         'email'      => 'clientemail'.rand(1,100).'@'.str_shuffle('domain345').'.com',
         'phone'      => str_shuffle('1234567890'),
-        'address'    => 'Sos '.rand(1, 30).' Dec , Strada Ferdinand, nr '.rand(1, 50),
+        'address'    => 'Sos '.rand(1, 30).' Dec , Strada Orhideea, nr '.rand(1, 50),
         'address2'   => 'Ap '.rand(1, 80),
         'zip'        => str_shuffle('123456'),
     ),

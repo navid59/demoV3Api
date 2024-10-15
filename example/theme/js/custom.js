@@ -33,6 +33,10 @@ $(function () {
           console.log("Error Code : "+response.data.error.code);  // Console Log
           
           if(response.data.error.code == 100 & response.data.payment.status == 15) {
+            $('#message-success').removeClass(function (index, css) {
+              return (css.match (/\balert-\S+/g) || []).join(' '); // removes anything that starts with "alert-"
+            });
+            $('#message-success').addClass("alert-info");
             $('#conclusionMsg').append('<li>Your card have 3DS</li>');
             $('#conclusionMsg').append('<li>You will be redirecting to Bank Page</li>');
             
@@ -46,32 +50,60 @@ $(function () {
              * For non 3DS card
              */
              $('#authenticationToken').val(response.data.customerAction.authenticationToken);
+             $('#message-success').removeClass(function (index, css) {
+              return (css.match (/\balert-\S+/g) || []).join(' '); // removes anything that starts with "alert-"
+            });
+             $('#message-success').addClass("alert-info");
              $('#conclusionMsg').append('<li>Your card dosn\'t have 3DS!!!</li>');
              $('#conclusionMsg').append('<li>Payment procces countinuing for non 3DS card</li>');
              buildFormRedirecBackURL(response.data);
 
           } else if(response.data.error.code == 56) {
             $('#alertTitle').html("Duplicate Order");
+            $('#message-success').removeClass(function (index, css) {
+              return (css.match (/\balert-\S+/g) || []).join(' '); // removes anything that starts with "alert-"
+            });
+            $('#message-success').addClass("alert-warning");
             $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
           }else if(response.data.error.code == 19) {
             $('#alertTitle').html("Error");
-            $('#conclusionMsg').append('<li>Expire Card Error</li>');
+            $('#message-success').removeClass(function (index, css) {
+              return (css.match (/\balert-\S+/g) || []).join(' '); // removes anything that starts with "alert-"
+            });
+            $('#message-success').addClass("alert-danger");
+            $('#conclusionMsg').html('<li>Expire Card Error</li>');
             $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
           } else if(response.data.error.code == 20) {
             $('#alertTitle').html("Error");
-            $('#conclusionMsg').append('<li>Fonduri insuficiente</li>');
+            $('#message-success').removeClass(function (index, css) {
+              return (css.match (/\balert-\S+/g) || []).join(' '); // removes anything that starts with "alert-"
+            });
+            $('#message-success').addClass("alert-danger");
+            $('#conclusionMsg').html('<li>Fonduri insuficiente</li>');
             $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
           }  else if(response.data.error.code == 21 || response.data.error.code == 22) {
             $('#alertTitle').html("Error");
-            $('#conclusionMsg').append('<li>CVV Error</li>');
+            $('#message-success').removeClass(function (index, css) {
+              return (css.match (/\balert-\S+/g) || []).join(' '); // removes anything that starts with "alert-"
+            });
+            $('#message-success').addClass("alert-danger");
+            $('#conclusionMsg').html('<li>CVV Error</li>');
             $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
           } else if(response.data.error.code == 34) {
             $('#alertTitle').html("Error");
-            $('#conclusionMsg').append('<li>Transaction not allowed</li>');
+            $('#message-success').removeClass(function (index, css) {
+              return (css.match (/\balert-\S+/g) || []).join(' '); // removes anything that starts with "alert-"
+            });
+            $('#message-success').addClass("alert-danger");
+            $('#conclusionMsg').html('<li>Transaction not allowed</li>');
             $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
           }else {
             $('#alertTitle').html("Info");
-            $('#conclusionMsg').append('<li>'+response.data.error.message+'</li>');
+            $('#message-success').removeClass(function (index, css) {
+              return (css.match (/\balert-\S+/g) || []).join(' '); // removes anything that starts with "alert-"
+            });
+            $('#message-success').addClass("alert-warning");
+            $('#conclusionMsg').html('<li>'+response.data.error.message+'</li>');
           }
         }else{
           $('#message-success').hide();
@@ -142,5 +174,4 @@ document.getElementById(formUniqueID).submit();
   $('#paymentCurrency').html(response.payment.currency);
   $('#ntpID').html(response.payment.ntpID);
   $('#token').html(response.payment.token);
-
  }

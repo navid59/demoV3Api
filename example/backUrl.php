@@ -26,11 +26,11 @@ $dotenv->load();
  * if Session is expired
  * redirect to 404
  * */ 
-if(count($_SESSION) == 0 || !isset($_SESSION)) {
-    $url = $_ENV['PROJECT_SERVER_ADDRESS'].$_ENV['PROJECT_BASE_ROOT'].$_ENV['PROJECT_404_PAGE'];
-    header("Location: $url");
-    exit;
-}
+// if(count($_SESSION) == 0 || !isset($_SESSION)) {
+//     $url = $_ENV['PROJECT_SERVER_ADDRESS'].$_ENV['PROJECT_BASE_ROOT'].$_ENV['PROJECT_404_PAGE'];
+//     header("Location: $url");
+//     exit;
+// }
 
 /**
  * Define verifyAuth class
@@ -40,8 +40,13 @@ if(count($_SESSION) == 0 || !isset($_SESSION)) {
  */
 $verifyAuth = new VerifyAuth();
 $verifyAuth->apiKey              = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0'; // Valid Api cod - Oct 2021
-$verifyAuth->authenticationToken = $_SESSION['authenticationToken'];
-$verifyAuth->ntpID               = $_SESSION['ntpID'];
+// if(isset($_SESSION['authenticationToken'])) {
+//     $verifyAuth->authenticationToken = $_SESSION['authenticationToken'];
+// }
+
+$verifyAuth->authenticationToken = isset($_SESSION['authenticationToken']) ? $_SESSION['authenticationToken'] : null;
+$verifyAuth->ntpID = isset($_SESSION['ntpID']) ? $_SESSION['ntpID'] : null;
+
 $verifyAuth->paRes               = $_POST['paRes'];
 $verifyAuth->isLive              = false;
 
