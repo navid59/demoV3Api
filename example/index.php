@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -12,14 +12,10 @@ include_once('classes/log.php');
  * Load .env 
  * To read Logo , ... from .env
  */
-// $dotenv = new Dotenv\Dotenv(__DIR__);
-// $dotenv->load();
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-// echo $_ENV['PROJECT_AUTHOR'];
-// die();
 
 log::setRealTimeLog(array('CheckoutPage' => $_ENV['LOG_TXT_CHECKOUT'] ? $_ENV['LOG_TXT_CHECKOUT'] : 'Checkout is hitting' ));
 ?>

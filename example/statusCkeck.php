@@ -1,6 +1,4 @@
 <?php 
-session_start();
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -17,8 +15,6 @@ include_once __DIR__ . '/vendor/autoload.php';
  * The  env var using in UI ,..
  */
 
-// $dotenv = new Dotenv\Dotenv(__DIR__);
-// $dotenv->load();
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -27,7 +23,7 @@ $dotenv->load();
  * if Session is expired
  * redirect to 404
  * */ 
-if(count($_SESSION) == 0 || !isset($_SESSION)) {
+if(empty($_COOKIE['orderID']) || empty($_COOKIE['ntpID'])) {
     $url = $_ENV['PROJECT_SERVER_ADDRESS'].$_ENV['PROJECT_BASE_ROOT'].$_ENV['PROJECT_404_PAGE'];
     header("Location: $url");
     exit;
@@ -39,10 +35,11 @@ if(count($_SESSION) == 0 || !isset($_SESSION)) {
  * the "apiKey","isLive", "posSignature" can be set statically or read from DB, File, ...
  */
 $statusPayment = new Status();
-$statusPayment->apiKey              = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0'; // Your Api key here
-$statusPayment->posSignature        = 'LXTP-3WDM-WVXL-GC8B-Y5DA';                                 // Your signiture ID here
-$statusPayment->ntpID               = $_SESSION['ntpID'];
-$statusPayment->orderID             = $_SESSION['orderID'];
+$statusPayment->posSignature        = 'AAAA-BBBB-CCCC-DDDD-EEEE';                  // Your signiture ID hear
+$statusPayment->apiKey              = 'YOUR-NETOPIA-API-KEY-SHOULD-BE-ADDED-HERE'; // Api KEY - here
+
+$statusPayment->ntpID               = $_COOKIE['ntpID'];
+$statusPayment->orderID             = $_COOKIE['orderID'];
 $statusPayment->isLive              = false;
 
 
@@ -62,7 +59,6 @@ $jsonStatusPayment = $statusPayment->setStatus();
  */
 $jsonStatusResult  = $statusPayment->getStatus($jsonStatusPayment);
 $paymentStatustArr = json_decode($jsonStatusResult);
-
 ?>
 <!doctype html>
 <html lang="en">

@@ -13,7 +13,10 @@ $(function () {
     $('#3DS').val(sendClientBrowserInfo());
   }
  
-    // $('form')[0].reset(); // to Clean values by duble click
+  /** Disable Submit Botton & Show loading */
+  $('#loading').css('display','block');
+  $('#doPayment').prop('disabled', true);
+
   e.preventDefault();
   $.ajax({
       type: 'post',
@@ -25,6 +28,7 @@ $(function () {
         $('#message').show();
         response = JSON.parse(response);
         if(response.status){
+          $('#submitAndLoading').css('display','none');
           $('#message-warning').hide();
           $('#message-info').hide();
           $('#message-success').show();
@@ -106,6 +110,7 @@ $(function () {
             $('#conclusionMsg').html('<li>'+response.data.error.message+'</li>');
           }
         }else{
+          $('#submitAndLoading').css('display','none');
           $('#message-success').hide();
           $('#message-info').hide();
 

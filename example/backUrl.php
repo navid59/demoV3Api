@@ -1,6 +1,4 @@
 <?php 
-session_start();
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -15,22 +13,9 @@ include_once __DIR__ . '/vendor/autoload.php';
  * Read Base root , ... from .env
  * The  env var using in UI ,..
  */
-
-// $dotenv = new Dotenv\Dotenv(__DIR__);
-// $dotenv->load();
-
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-/**
- * if Session is expired
- * redirect to 404
- * */ 
-// if(count($_SESSION) == 0 || !isset($_SESSION)) {
-//     $url = $_ENV['PROJECT_SERVER_ADDRESS'].$_ENV['PROJECT_BASE_ROOT'].$_ENV['PROJECT_404_PAGE'];
-//     header("Location: $url");
-//     exit;
-// }
 
 /**
  * Define verifyAuth class
@@ -39,13 +24,21 @@ $dotenv->load();
  * you have the "authenticationToken","ntpID" from response of start action 
  */
 $verifyAuth = new VerifyAuth();
-$verifyAuth->apiKey              = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0'; // Valid Api cod - Oct 2021
-// if(isset($_SESSION['authenticationToken'])) {
-//     $verifyAuth->authenticationToken = $_SESSION['authenticationToken'];
-// }
+$verifyAuth->apiKey              = 'YOUR-NETOPIA-API-KEY-SHOULD-BE-ADDED-HERE'; // Api KEY - here
 
-$verifyAuth->authenticationToken = isset($_SESSION['authenticationToken']) ? $_SESSION['authenticationToken'] : null;
-$verifyAuth->ntpID = isset($_SESSION['ntpID']) ? $_SESSION['ntpID'] : null;
+
+/**
+ * if Session / cookie is expired / not exist
+ * redirect to 404
+ * */ 
+if(empty($_COOKIE['orderID']) || empty($_COOKIE['ntpID'])) {
+    $url = $_ENV['PROJECT_SERVER_ADDRESS'].$_ENV['PROJECT_BASE_ROOT'].$_ENV['PROJECT_404_PAGE'];
+    header("Location: $url");
+    exit;
+}
+
+$verifyAuth->authenticationToken = isset($_COOKIE['authenticationToken']) ? $_COOKIE['authenticationToken'] : null;
+$verifyAuth->ntpID = isset($_COOKIE['ntpID']) ? $_COOKIE['ntpID'] : null;
 
 $verifyAuth->paRes               = $_POST['paRes'];
 $verifyAuth->isLive              = false;
@@ -53,15 +46,12 @@ $verifyAuth->isLive              = false;
 
 /**
  * Set params for /payment/card/verify-auth
+ * Send request to /payment/card/verify-auth
  * @return 
  * - a Json string
  */
 $jsonAuthParam = $verifyAuth->setVerifyAuth();
 
-
-/**
- * Send request to /payment/card/verify-auth
- */
 $paymentResult = $verifyAuth->sendRequestVerifyAuth($jsonAuthParam);
 $paymentResultArr = json_decode($paymentResult);
 

@@ -336,23 +336,20 @@ $prices = array_column($products, 'pPrice');
         </div>
       </div>
       <hr class="mb-4">
-      <div class="row">
+      <div id="submitAndLoading" class="row">
         <div class="col-6 col-md-4">
           &nbsp;
         </div>
-        <div class="col-6 col-md-4">
+        <div class="">
           <input class="btn btn-primary btn-lg btn-block" id="doPayment" type="submit" value="Continue to checkout">
         </div>
-        <div class="col-6 col-md-4">
+        <div id="loading" class="col-4 col-md-2" style="display:none" >
           <div class="spinner-border text-info" role="status">
             <span class="sr-only">Loading...</span>
           </div>
         </div>
       </div>
-      <hr class="mb-4">
-      <!-- <input class="btn btn-primary btn-lg btn-block" id="doPayment" type="submit" value="Continue to checkout"> -->
     </form>
-    <hr class="mb-4">
     <div id="message" style="display: none">
       <div id="message-success" class="alert alert-success" role="alert" style="display: none">
         <h4 class="alert-heading" id="alertTitle">Well done!</h4>

@@ -6,10 +6,12 @@ error_reporting(E_ALL);
 include_once __DIR__ . '/vendor/autoload.php';
 /**
  * Load .env 
- * To read Logo , ... from .env
+ * Read Base root , ... from .env
+ * The  env var using in UI ,..
  */
-$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -17,11 +19,11 @@ $dotenv->load();
     <body class="bg-light">
         <div class="container">
             <?php include_once("theme/inc/topNav.inc"); ?>
-            <div class="row">
-                <h1>Error 404</h1>
-            </div>
-            <div class="row">
-                <h5>May the session is expired</h5>
+            <div id="message-warning-404" class="alert alert-warning" role="alert" >
+                <h4 class="alert-heading" >Error!</h4>
+                <p>Check if you sent all necessary parameters!.</p>
+                <hr>
+                <p class="mb-0" >As example, OrderID, ntpID,...</p>
             </div>
         </div>
         <?php include_once("theme/inc/footer.inc"); ?>

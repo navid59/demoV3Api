@@ -2,10 +2,12 @@
     <div class="alert alert-primary" role="alert">
         <?=$paymentStatustArr->message?>
     </div>
-    <div class="row">
+    <?php
+    if($paymentStatustArr->code == 200 ) {
+        ?>
+        <div class="row">
         <div class="col-md-8">
             <h4 class="mb-3">Payment Status</h4>
-            
             <div class="row">
                 <div class="col-md-6 mb-6">
                     <label for="cc-expiration-year">Error Code</label>
@@ -123,4 +125,15 @@
             </div>
         </div>
     </div>
+        <?php
+    } else {
+        ?>
+        <div id="message-warning" class="alert alert-warning" role="alert" style="display: block">
+            <h4 class="alert-heading" id="">Payment Status error!</h4>
+            <p><span id="warning-status-msg">Error Message : <?= $paymentStatustArr->data->message; ?></span>.</p>
+            <p><span class="mb-0" id="warning-full-msg">Error Code: <span id="warning-type-code"><?= $paymentStatustArr->data->code; ?></span></p>
+        </div>  
+        <?php
+    }
+    ?>
 </div>

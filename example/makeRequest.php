@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -9,12 +7,12 @@ include_once('classes/log.php');
 include_once('../lib/request.php');
 
 $request = new Request();
-$request->posSignature  = 'LXTP-3WDM-WVXL-GC8B-Y5DA';                  // Your signiture ID hear
-// $request->apiKey        = 'vM-oq2feqWcdtdxP0a5Z16wJbpZefotsCM2frQzRk9Vv0rb9ZCpm1HNjmA==';   // Your Api key Live
-$request->apiKey        = 'Uxf3OY--rDK3Qae8CiJJUlAcuRJFp7tzGY4M8KocQaCGyfEqUGhGskv0';   // Your Api key Sandbox
+$request->posSignature  = 'AAAA-BBBB-CCCC-DDDD-EEEE';                  // Your signiture ID hear
+$request->apiKey        = 'YOUR-NETOPIA-API-KEY-SHOULD-BE-ADDED-HERE'; // Api KEY - here
+
 $request->isLive        = false;
-$request->notifyUrl     = 'http://34.78.187.3/example/ipn.php';               // Your IPN URL
-$request->redirectUrl   = 'http://34.78.187.3/example/backUrl.php';           // Your backURL
+$request->notifyUrl     = 'http://YOUR-DOMAIN/example/ipn.php';        // Your IPN URL
+$request->redirectUrl   = 'http://YOUR-DOMAIN/example/backUrl.php';    // Your backURL
 
 
 /**
@@ -83,10 +81,10 @@ $request->jsonRequest = $request->setRequest($configData, $cardData, $orderData,
 $startResult = $request->startPayment();
 
 /**
- * display result of start action in jason format
- * to be use in the UI, ...
+ * Set Order ID in Cookie
  */
-echo $startResult;
+setcookie('orderID', $orderData->orderID);
+
 
 
 /**
@@ -104,25 +102,26 @@ if($resultObj->status){
              * Set authenticationToken & ntpID to session 
              */
             if($resultObj->data->customerAction->type == "Authentication3D") {
-                $_SESSION['authorizeUrl'] = $resultObj->data->customerAction->url;
+                setcookie('authorizeUrl', $resultObj->data->customerAction->url);
             }
 
             /**
              * Thg authenticationToken is not exist in response always
              */
             if(isset($resultObj->data->customerAction->authenticationToken) ) {
-                $_SESSION['authenticationToken'] = $resultObj->data->customerAction->authenticationToken;
+                setcookie('authenticationToken', $resultObj->data->customerAction->authenticationToken);
+            } else {
+                setcookie('authenticationToken', "", -1);
             }
             
-            $_SESSION['ntpID'] = $resultObj->data->payment->ntpID;
+            setcookie('ntpID', $resultObj->data->payment->ntpID);
         break;
         case 0:
             /**
              * Card has no 3DS
              */
-            $_SESSION['ntpID']   = $resultObj->data->payment->ntpID;
-            $_SESSION['token']   = $resultObj->data->payment->token;
-            $_SESSION['orderID'] = $orderData->orderID;
+            setcookie('ntpID', $resultObj->data->payment->ntpID);
+            setcookie('token', $resultObj->data->payment->token);
         break;
         case 56:
             /**
@@ -176,4 +175,9 @@ function setProducts($productList)
         return $proArr;
     }
 
+/**
+ * display result of start action in jason format
+ * to be use in the UI, ...
+ */
+echo $startResult;
 ?>
