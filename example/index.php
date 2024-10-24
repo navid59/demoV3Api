@@ -1,20 +1,25 @@
 <?php
-// session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include_once __DIR__ . '/vendor/autoload.php';
 include_once('classes/log.php');
-
-
+include_once __DIR__ . '/vendor/autoload.php';
 /**
  * Load .env 
  * To read Logo , ... from .env
  */
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+ $dotenv->load();
+ 
+/**
+ * Reset all cookies
+ */
+setcookie('orderID', "", -1);
+setcookie('ntpID', "", -1);
+setcookie('authorizeUrl', "", -1);
+setcookie('token', "", -1);
+setcookie('authenticationToken', "", -1);
 
 
 log::setRealTimeLog(array('CheckoutPage' => $_ENV['LOG_TXT_CHECKOUT'] ? $_ENV['LOG_TXT_CHECKOUT'] : 'Checkout is hitting' ));
@@ -31,7 +36,6 @@ log::setRealTimeLog(array('CheckoutPage' => $_ENV['LOG_TXT_CHECKOUT'] ? $_ENV['L
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <?php include_once("theme/checkout.php"); ?>
                     </div>
-
                     <div class="tab-pane fade" id="realTimeLog" role="tabpanel" aria-labelledby="realTimeLog-tab">
                         <div class="panel panel-primary" id="result_panel">
                             <div class="panel-heading">

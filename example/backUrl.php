@@ -5,8 +5,7 @@ error_reporting(E_ALL);
 
 include_once('classes/log.php');
 include_once('../lib/verifyAuth.php');
-
-
+include_once('../lib/status.php');
 include_once __DIR__ . '/vendor/autoload.php';
 /**
  * Load .env 
@@ -15,16 +14,6 @@ include_once __DIR__ . '/vendor/autoload.php';
  */
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
-
-/**
- * Define verifyAuth class
- * Set the parameters
- * the "apiKey","isLive" can be set static or read from DB, File, ...
- * you have the "authenticationToken","ntpID" from response of start action 
- */
-$verifyAuth = new VerifyAuth();
-$verifyAuth->apiKey              = 'YOUR-NETOPIA-API-KEY-SHOULD-BE-ADDED-HERE'; // Api KEY - here
 
 
 /**
@@ -37,23 +26,60 @@ if(empty($_COOKIE['orderID']) || empty($_COOKIE['ntpID'])) {
     exit;
 }
 
-$verifyAuth->authenticationToken = isset($_COOKIE['authenticationToken']) ? $_COOKIE['authenticationToken'] : null;
-$verifyAuth->ntpID = isset($_COOKIE['ntpID']) ? $_COOKIE['ntpID'] : null;
-
-$verifyAuth->paRes               = $_POST['paRes'];
-$verifyAuth->isLive              = false;
-
+/**
+* Get Payment Status
+* the "apiKey","isLive", "posSignature" can be set statically or read from DB,File, ...
+*/
+$statusPayment = new Status();
+$statusPayment->posSignature        = $_ENV['NETOPIA_SIGNATURE'];
+$statusPayment->apiKey              = $_ENV['NETOPIA_API_KEY']; // Your Api KEY
+$statusPayment->ntpID               = $_COOKIE['ntpID'];
+$statusPayment->orderID             = $_COOKIE['orderID'];
+$statusPayment->isLive              = $_ENV['PAYMENT_LIVE_MODE'];
 
 /**
- * Set params for /payment/card/verify-auth
- * Send request to /payment/card/verify-auth
- * @return 
- * - a Json string
+ * Validate, set parameters & get payment status
  */
-$jsonAuthParam = $verifyAuth->setVerifyAuth();
+$statusPayment->validateParam();
+$jsonStatusPayment = $statusPayment->setStatus();
+$jsonStatusResult  = $statusPayment->getStatus($jsonStatusPayment);
+$paymentStatustArr = json_decode($jsonStatusResult);
 
-$paymentResult = $verifyAuth->sendRequestVerifyAuth($jsonAuthParam);
-$paymentResultArr = json_decode($paymentResult);
+switch ($paymentStatustArr->data->error->code) {
+    case "0":
+        $payReturnArrData = $paymentStatustArr;
+        break;
+    
+    case "100":
+        /**
+         * Define verifyAuth
+         */
+        $verifyAuth = new VerifyAuth();
+        $verifyAuth->apiKey              = $_ENV['NETOPIA_API_KEY'];                                                                // Your Api KEY
+        $verifyAuth->authenticationToken = isset($_COOKIE['authenticationToken']) ? $_COOKIE['authenticationToken'] : null;
+        $verifyAuth->ntpID               = isset($_COOKIE['ntpID']) ? $_COOKIE['ntpID'] : null;
+        $verifyAuth->paRes               = $_POST['paRes'];                                                                         // Here is problem , fo r live ,...
+        $verifyAuth->isLive              = $_ENV['PAYMENT_LIVE_MODE'];
+
+
+        /**
+         * Set params for /payment/card/verify-auth
+         * Send request to /payment/card/verify-auth
+         * @return 
+         *  Json string
+         */
+        $jsonAuthParam = $verifyAuth->setVerifyAuth();
+        $paymentResult = $verifyAuth->sendRequestVerifyAuth($jsonAuthParam);
+        $paymentResultArr = json_decode($paymentResult);
+
+        $payReturnArrData = $paymentResultArr;
+        break;
+    
+    default:
+        # code...
+        // die("Do Error Handelling ;-) ");
+        break;
+}
 
 ?>
 <!doctype html>
@@ -63,7 +89,7 @@ $paymentResultArr = json_decode($paymentResult);
         <div class="container">
             <?php include_once("theme/inc/topNav.inc"); ?>
             <div class="row">
-                <?php include_once("theme/backAuthForm.php"); ?>
+                <?php include_once("theme/returnUrlUI.php"); ?>
             </div>
         </div>
         <?php include_once("theme/inc/footer.inc"); ?>

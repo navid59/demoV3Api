@@ -62,6 +62,16 @@ $(function () {
              $('#conclusionMsg').append('<li>Payment procces countinuing for non 3DS card</li>');
              buildFormRedirecBackURL(response.data);
 
+          } else if(response.data.error.code == 101 & response.data.payment.status == 1) {
+              $('#message-success').addClass("alert-info");
+              $('#conclusionMsg').append('<li>'+ response.message +'</li>');
+              $('#conclusionMsg').append('<li>'+ response.data.error.message +'</li>');
+              $('#conclusionMsg').append('<li>You will be redirecting to NETOPIA Payment Page.</li>');
+              $('#conclusionMsg').append('<li>URL : '+ response.data.payment.paymentURL +'</li>');
+                /**
+               * Redirect to payment page
+               */
+              $(location).attr('href',response.data.payment.paymentURL);
           } else if(response.data.error.code == 56) {
             $('#alertTitle').html("Duplicate Order");
             $('#message-success').removeClass(function (index, css) {

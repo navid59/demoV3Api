@@ -5,15 +5,22 @@ error_reporting(E_ALL);
 
 include_once('classes/log.php');
 include_once('../lib/request.php');
+include_once __DIR__ . '/vendor/autoload.php';
+/**
+ * Load .env 
+ * Read Base root , ... from .env
+ * The  env var using in UI ,..
+ */
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 $request = new Request();
-$request->posSignature  = 'AAAA-BBBB-CCCC-DDDD-EEEE';                  // Your signiture ID hear
-$request->apiKey        = 'YOUR-NETOPIA-API-KEY-SHOULD-BE-ADDED-HERE'; // Api KEY - here
 
-$request->isLive        = false;
-$request->notifyUrl     = 'http://YOUR-DOMAIN/example/ipn.php';        // Your IPN URL
-$request->redirectUrl   = 'http://YOUR-DOMAIN/example/backUrl.php';    // Your backURL
-
+$request->posSignature  = $_ENV['NETOPIA_SIGNATURE'];             // Your signiture ID hear
+$request->apiKey        = $_ENV['NETOPIA_API_KEY'];               // Your Api key Sandbox
+$request->isLive        = $_ENV['PAYMENT_LIVE_MODE'];             // true || false
+$request->notifyUrl     = $_ENV['PAYMENT_NOTIFY_URL'];            // Your IPN URL
+$request->redirectUrl   = $_ENV['PAYMENT_REDIRECT_URL'];          // Your backURL
 
 /**
  * Prepare json for start action
@@ -92,7 +99,6 @@ setcookie('orderID', $orderData->orderID);
  *  - set 'authenticationToken' , 'ntpID' & 'authorizeUrl' in session
  */
 $resultObj = json_decode($startResult);
-// print_r($resultObj);
 log::setBackendLog($resultObj);
 
 if($resultObj->status){
@@ -115,6 +121,13 @@ if($resultObj->status){
             }
             
             setcookie('ntpID', $resultObj->data->payment->ntpID);
+        break;
+        case 101:
+            /**
+            * Card has no 3DS
+            */
+            setcookie('ntpID', $resultObj->data->payment->ntpID);
+            // setcookie('token', $resultObj->data->payment->token);
         break;
         case 0:
             /**

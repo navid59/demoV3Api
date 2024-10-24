@@ -14,8 +14,6 @@ include_once __DIR__ . '/vendor/autoload.php';
  * Read Base root , ... from .env
  * The  env var using in UI ,..
  */
-
-
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -35,31 +33,23 @@ if(empty($_COOKIE['orderID']) || empty($_COOKIE['ntpID'])) {
  * the "apiKey","isLive", "posSignature" can be set statically or read from DB, File, ...
  */
 $statusPayment = new Status();
-$statusPayment->posSignature        = 'AAAA-BBBB-CCCC-DDDD-EEEE';                  // Your signiture ID hear
-$statusPayment->apiKey              = 'YOUR-NETOPIA-API-KEY-SHOULD-BE-ADDED-HERE'; // Api KEY - here
+$statusPayment->posSignature        = $_ENV['NETOPIA_SIGNATURE'];   // Your signiture ID here
+$statusPayment->apiKey              = $_ENV['NETOPIA_API_KEY'];     // Your  Api key
 
 $statusPayment->ntpID               = $_COOKIE['ntpID'];
 $statusPayment->orderID             = $_COOKIE['orderID'];
-$statusPayment->isLive              = false;
+$statusPayment->isLive              = $_ENV['PAYMENT_LIVE_MODE'];
 
-
-/**
- * Validate parameters for status
- */
-$statusPayment->validateParam();
-
-
-/**
- * Set params for /operation/status
- */
-$jsonStatusPayment = $statusPayment->setStatus();
 
 /**
  * Get payment status
  */
+$statusPayment->validateParam();
+$jsonStatusPayment = $statusPayment->setStatus();
 $jsonStatusResult  = $statusPayment->getStatus($jsonStatusPayment);
 $paymentStatustArr = json_decode($jsonStatusResult);
 ?>
+
 <!doctype html>
 <html lang="en">
     <?php include_once("theme/inc/header.inc"); ?>

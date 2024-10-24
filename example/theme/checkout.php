@@ -293,12 +293,21 @@ $prices = array_column($products, 'pPrice');
           <label class="custom-control-label" for="btc">BTC</label>
         </div> -->
       </div>
-
-      <h4 class="mb-3">Card Information</h4>
-      <div class="row">
+      <!--  Card Data Collapse -->
+      <p>
+        <a class="" data-toggle="collapse" href="#collapseCardData" role="button" aria-expanded="false" aria-controls="collapseCardData">
+        <h6 class="mb-3">Card Information</h6>
+        </a>
+      </p>
+      <div class="collapse" id="collapseCardData">
+        <div class="card card-body">
+        Adding card data is not obligatory and not recommended!. <br>
+        In this example, it is included only to demonstrate the possibility of sending card data as well.
+        </div>
+        <div class="row">
         <div class="col-md-6 mb-3">
           <label for="cc-name">Name on card</label>
-          <input type="text" class="form-control" id="cc-name" name="cc-name" value="Test Test" placeholder="" required>
+          <input type="text" class="form-control" id="cc-name" name="cc-name" value="" placeholder="Card Holder">
           <small class="text-muted">Full name as displayed on card</small>
           <div class="invalid-feedback">
             Name on card is required
@@ -306,7 +315,7 @@ $prices = array_column($products, 'pPrice');
         </div>
         <div class="col-md-6 mb-3">
           <label for="cc-number">Credit card number</label>
-          <input type="text" class="form-control" id="cc-number" name="account" value="9900009184214768" placeholder="" required>
+          <input type="text" class="form-control" id="cc-number" name="account" value="" placeholder="Card number" >
           <div class="invalid-feedback">
             Credit card number is required
           </div>
@@ -315,26 +324,29 @@ $prices = array_column($products, 'pPrice');
       <div class="row">
         <div class="col-md-3 mb-3">
           <label for="cc-expiration-month">Expiration Month</label>
-          <input type="text" class="form-control" id="cc-expiration-month" name="expMonth" value="<?=rand(1,12)?>" placeholder="" required>
+          <input type="text" class="form-control" id="cc-expiration-month" name="expMonth" value="" placeholder="MM - Month format " >
           <div class="invalid-feedback">
             Expiration Month required
           </div>
         </div>
         <div class="col-md-3 mb-3">
           <label for="cc-expiration-year">Expiration Year</label>
-          <input type="text" class="form-control" id="cc-expiration-year" name="expYear" value="<?=date('Y', strtotime('+3 year'))?>" placeholder="" required>
+          <input type="text" class="form-control" id="cc-expiration-year" name="expYear" value="" placeholder="YYYY - Year format" >
           <div class="invalid-feedback">
             Expiration Year required
           </div>
         </div>
         <div class="col-md-6 mb-3">
           <label for="cc-cvv">CVV</label>
-          <input type="text" class="form-control" id="cc-cvv" name="secretCode" value="111" placeholder="" required>
+          <input type="text" class="form-control" id="cc-cvv" name="secretCode" value="" placeholder="Card cvv" >
           <div class="invalid-feedback">
             Security code required
           </div>
         </div>
       </div>
+      </div>
+      <!--  -->
+      
       <hr class="mb-4">
       <div id="submitAndLoading" class="row">
         <div class="col-6 col-md-4">
