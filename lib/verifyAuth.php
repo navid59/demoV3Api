@@ -3,18 +3,19 @@ include_once('../lib/request.php');
 
 
 class VerifyAuth extends Request {
-    public $paRes;
+    // public $paRes;
+    public $postData;
     public function __construct(){
         parent::__construct();
     }
+
+
 
     public function setVerifyAuth() {
         $paymentCartVerifyAuthParam = [
             "authenticationToken" => (string) $this->authenticationToken,
             "ntpID" => (string) $this->ntpID,
-            "formData" => [
-                "paRes" => (string) $this->paRes
-            ]
+            "formData" => $this->postData
         ];
 
         return (json_encode($paymentCartVerifyAuthParam));

@@ -54,11 +54,12 @@ switch ($paymentStatustArr->data->error->code) {
         /**
          * Define verifyAuth
          */
+
         $verifyAuth = new VerifyAuth();
         $verifyAuth->apiKey              = $_ENV['NETOPIA_API_KEY'];                                                                // Your Api KEY
         $verifyAuth->authenticationToken = isset($_COOKIE['authenticationToken']) ? $_COOKIE['authenticationToken'] : null;
         $verifyAuth->ntpID               = isset($_COOKIE['ntpID']) ? $_COOKIE['ntpID'] : null;
-        $verifyAuth->paRes               = $_POST['paRes'];                                                                         // Here is problem , fo r live ,...
+        $verifyAuth->postData            = $_POST;                                                                                  // Parameter passed by bank ,...
         $verifyAuth->isLive              = $_ENV['PAYMENT_LIVE_MODE'];
 
 
