@@ -50,7 +50,7 @@ $orderData = new \StdClass();
  
 $orderData->description             = isset($_POST['description']) ?  $_POST['description'] :  "DEMO API FROM WEB - V3";
 $orderData->orderID                 = $_POST['orderID'];
-$orderData->amount                  = $_POST['amount'];
+$orderData->amount                  = "0.1";//$_POST['amount'];
 $orderData->currency                = $_POST['currency'];
 
 $orderData->billing                 = new \StdClass();
@@ -134,7 +134,9 @@ if($resultObj->status){
              * Card has no 3DS
              */
             setcookie('ntpID', $resultObj->data->payment->ntpID);
-            setcookie('token', $resultObj->data->payment->token);
+            if(isset($resultObj->data->payment->token)) {
+                setcookie('token', $resultObj->data->payment->token);
+            }
         break;
         case 56:
             /**

@@ -7,15 +7,18 @@ PHP 5.7.x - 8.0.x
 
 ### API URL
 * #### Sandbox:
-       https://secure.sandbox.netopia-payments.com/                     
-       https://secure.sandbox.netopia-payments.com/payment/card/start   
+       https://secure.sandbox.netopia-payments.com/
+       https://secure.sandbox.netopia-payments.com/payment/card/start
 * #### Live:
-       https://secure.netopia-payments.com/                             
-       https://secure.mobilpay.ro/pay/payment/card/start                
+       https://secure.netopia-payments.com/
+       https://secure.mobilpay.ro/pay/payment/card/start
 
 
 ### API Specification
-* https://secure.netopia-payments.com/spec
+* https://secure.sandbox.netopia-payments.com/spec
+
+### Api Documentation
+* https://doc.netopia-payments.com/docs/payment-api/v2.x/intro
 
 
 ### API Actions
@@ -24,7 +27,7 @@ PHP 5.7.x - 8.0.x
     To start the transaction you will need to send the request to **START** end point,
 
     * **Action URL:** /payment/card/start
-    * **Method:** `POST`    
+    * **Method:** `POST`
     * **Param type:** JSON
         * **Param structure:** The JSON as parameter has tree main part        
             * **Config:**  to set configiguraton section of a transaction
