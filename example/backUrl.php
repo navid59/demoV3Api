@@ -41,18 +41,18 @@ $statusPayment->isLive              = $_ENV['PAYMENT_LIVE_MODE'];
  * Validate, set parameters & get payment status
  */
 $statusPayment->validateParam();
-$jsonStatusPayment = $statusPayment->setStatus();
-log::setBackendLog($jsonStatusPayment);
-
+$jsonStatusPayment = $statusPayment->setStatus(); 
 $jsonStatusResult  = $statusPayment->getStatus($jsonStatusPayment);
+$paymentStatustObj = json_decode($jsonStatusResult);
+$payReturnArrData = $paymentStatustObj;
+
 log::setBackendLog($jsonStatusResult);
+log::setRealTimeLog(array("paymentStatus" => $paymentStatustObj->message));
+log::setRealTimeLog(array("paymentStatus" => $paymentStatustObj->data->error->message));
 
-$paymentStatustArr = json_decode($jsonStatusResult);
-$payReturnArrData = $paymentStatustArr;
-
-switch ($paymentStatustArr->data->error->code) {
+switch ($paymentStatustObj->data->error->code) {
     case "100":
-        if($paymentStatustArr->payment->status == 15) {
+        if($paymentStatustObj->data->payment->status == 15) {
             /**
              * Define verifyAuth
              */
